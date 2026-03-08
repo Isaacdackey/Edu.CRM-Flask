@@ -4,6 +4,7 @@ from app.services.teacher_service import (
     add_teacher,
     delete_teacher
 )
+from app.auth.route import login_required
 
 teachers_bp = Blueprint(
     "teachers",
@@ -13,6 +14,7 @@ teachers_bp = Blueprint(
 
 
 @teachers_bp.route("/")
+@login_required
 def teachers_list():
     teachers = list_teachers()
 
@@ -20,6 +22,7 @@ def teachers_list():
 
 
 @teachers_bp.route("/create", methods=["GET", "POST"])
+@login_required
 def create_teacher():
 
     if request.method == "POST":
@@ -42,6 +45,7 @@ def create_teacher():
 
 
 @teachers_bp.route("/delete/<int:id>")
+@login_required
 def delete_teacher_route(id):
 
     delete_teacher(id)

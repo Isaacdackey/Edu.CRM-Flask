@@ -13,11 +13,19 @@ def add_course(title, teacher_id):
 def assign_student_to_course(course_id, student_id):
     for course in courses:
         if course["id"] == course_id:
-            course["student_ids"].append(student_id)
-
+            if student_id not in course["student_ids"]:
+                course["student_ids"].append(student_id)
+            return course
+    return None
 
 def list_courses():
     return courses
+
+def get_course_by_id(course_id):
+    for course in courses:
+        if course["id"] == course_id:
+            return course
+    return None
 
 def delete_course(course_id):
     global courses

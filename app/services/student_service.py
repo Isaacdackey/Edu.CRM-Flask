@@ -1,6 +1,7 @@
 students = []
 
 def add_student(student):
+    student["id"] = len(students) + 1
     students.append(student)
 
 def list_students():
