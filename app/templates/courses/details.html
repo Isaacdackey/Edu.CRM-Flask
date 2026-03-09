@@ -1,23 +1,46 @@
 {% extends "base.html" %}
 
+{% block title %}Détails du cours{% endblock %}
+
 {% block content %}
+<div class="max-w-3xl mx-auto">
+    <div class="mb-6">
+        <div class="flex items-center gap-3">
+            <a href="{{ url_for('courses.courses_list') }}" class="text-gray-500 hover:text-primary-600">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h1 class="text-3xl font-bold">Détails du cours</h1>
+        </div>
+    </div>
 
-<h2>Course Details: {{ course.title }}</h2>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="h-2 bg-gradient-to-r from-primary-500 to-primary-600"></div>
+        <div class="p-6 space-y-6">
+            <div>
+                <h2 class="text-2xl font-semibold">{{ course.title }}</h2>
+            </div>
 
-<p><strong>Teacher:</strong> {{ teacher.name }}</p>
+            <div class="border-t border-gray-200 pt-4">
+                <h3 class="font-semibold mb-2">Enseignant</h3>
+                <p>{{ teacher.name if teacher else 'Non assigné' }}</p>
+                {% if teacher %}
+                <p class="text-sm text-gray-600">{{ teacher.email }} - {{ teacher.speciality }}</p>
+                {% endif %}
+            </div>
 
-<h3>Assigned Students</h3>
-{% if students %}
-<ul>
-    {% for student in students %}
-    <li>{{ student.name }}</li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No students assigned yet.</p>
-{% endif %}
-
-<br>
-<a href="{{ url_for('courses.courses_list') }}">Back to Courses List</a>
-
+            <div class="border-t border-gray-200 pt-4">
+                <h3 class="font-semibold mb-2">Étudiants inscrits ({{ students|length }})</h3>
+                {% if students %}
+                <ul class="list-disc pl-5 space-y-1">
+                    {% for student in students %}
+                    <li>{{ student.name }} - {{ student.email }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-gray-500 italic">Aucun étudiant inscrit</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

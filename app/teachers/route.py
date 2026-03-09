@@ -37,7 +37,7 @@ def create_teacher():
 
         add_teacher(name, email, speciality)
 
-        flash("Teacher added successfully", "success")
+        flash("Enseignant ajouté avec succès", "success")
 
         return redirect(url_for("teachers.teachers_list"))
 
@@ -50,6 +50,6 @@ def delete_teacher_route(id):
 
     delete_teacher(id)
 
-    flash("Teacher deleted successfully", "success")
+    flash("Enseignant supprimé avec succès", "success")
 
     return redirect(url_for("teachers.teachers_list"))

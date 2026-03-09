@@ -1,13 +1,59 @@
 {% extends "base.html" %}
 
+{% block title %}Dashboard{% endblock %}
+
 {% block content %}
+<div class="space-y-8">
+    <div>
+        <h1 class="text-3xl font-bold">Tableau de bord</h1>
+        <p class="text-gray-500 mt-1">Bienvenue sur votre espace de gestion</p>
+    </div>
 
-<h1>Dashboard</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Étudiants</p>
+                    <p class="text-3xl font-bold mt-2">{{ students }}</p>
+                </div>
+                <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-user-graduate text-xl text-primary-600"></i>
+                </div>
+            </div>
+            <a href="{{ url_for('students.students_list') }}" class="mt-4 inline-flex items-center text-sm text-primary-600">
+                Voir tous <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+        </div>
 
-<p>Total Students : {{students}}</p>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Enseignants</p>
+                    <p class="text-3xl font-bold mt-2">{{ teachers }}</p>
+                </div>
+                <div class="w-12 h-12 bg-secondary-100 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-chalkboard-user text-xl text-secondary-600"></i>
+                </div>
+            </div>
+            <a href="{{ url_for('teachers.teachers_list') }}" class="mt-4 inline-flex items-center text-sm text-secondary-600">
+                Voir tous <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+        </div>
 
-<p>Total Teachers : {{teachers}}</p>
-
-<p>Total Courses : {{courses}}</p>
-
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Cours</p>
+                    <p class="text-3xl font-bold mt-2">{{ courses }}</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-book-open text-xl text-purple-600"></i>
+                </div>
+            </div>
+            <a href="{{ url_for('courses.courses_list') }}" class="mt-4 inline-flex items-center text-sm text-purple-600">
+                Voir tous <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}

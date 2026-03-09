@@ -1,37 +1,40 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="fr">
 <head>
-    <title>EduCRM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edu.CRM - {% block title %}{% endblock %}</title>
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+<body class="bg-gray-50 font-sans antialiased min-h-screen flex flex-col">
 
-<body>
+    {% include 'partials/_navbar.html' %}
 
-    <h1>EduCRM</h1>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+        {% include 'partials/_flash_messages.html' %}
+    </div>
 
-    <nav>
-        <a href="{{ url_for('dashboard.dashboard') }}">Dashboard</a> |
-        <a href="{{ url_for('students.students_list') }}">Students</a> |
-        <a href="{{ url_for('teachers.teachers_list') }}">Teachers</a> |
-        <a href="{{ url_for('courses.courses_list') }}">Courses</a> |
-        <a href="{{ url_for('auth.logout') }}">Logout</a>
-    </nav>
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% block content %}{% endblock %}
+    </main>
 
-    <hr>
+    {% include 'partials/_footer.html' %}
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-
-    {% for category, message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %}
-
-    {% endif %}
-    {% endwith %}
-
-    {% block content %}
-    {% endblock %}
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.animate-fade-in');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.transition = 'opacity 0.5s ease';
+                    message.style.opacity = '0';
+                    setTimeout(function() {
+                        message.remove();
+                    }, 500);
+                }, 3000);
+            });
+        });
+    </script>
 </body>
-
 </html>
