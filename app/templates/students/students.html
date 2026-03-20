@@ -6,8 +6,8 @@
 <div class="space-y-6">
     <div class="flex justify-between items-center">
         <div>
-            <h1 class="text-3xl font-bold">Gestion des étudiants</h1>
-            <p class="text-gray-500 mt-1">{{ students|length }} étudiant(s) inscrit(s)</p>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Gestion des étudiants</h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-1">{{ students|length }} étudiant(s) inscrit(s)</p>
         </div>
         <a href="{{ url_for('students.create_student') }}"
            class="inline-flex items-center px-4 py-2 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors">
@@ -16,26 +16,26 @@
         </a>
     </div>
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         <table class="w-full">
-            <thead class="bg-gray-50 border-b border-gray-200">
+            <thead class="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nom</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                 {% for student in students %}
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.id }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ student.name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ student.email }}</td>
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ student.id }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ student.name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ student.email }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <a href="{{ url_for('students.delete', id=student.id) }}"
                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?')"
-                           class="text-red-600 hover:text-red-900 transition-colors inline-flex items-center">
+                           class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 transition-colors inline-flex items-center">
                             <i class="fa-regular fa-trash-can mr-1"></i>
                             Supprimer
                         </a>
@@ -43,11 +43,11 @@
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="4" class="px-6 py-12 text-center text-gray-500">
+                    <td colspan="4" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
                         <div class="flex flex-col items-center">
                             <i class="fas fa-users text-4xl mb-3"></i>
                             <p>Aucun étudiant trouvé</p>
-                            <a href="{{ url_for('students.create_student') }}" class="mt-3 text-primary-600 hover:text-primary-700">
+                            <a href="{{ url_for('students.create_student') }}" class="mt-3 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                             Ajouter votre premier étudiant
                             </a>
                         </div>
