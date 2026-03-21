@@ -1,7 +1,11 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Config:
-    APP_NAME = os.getenv('APP_NAME', 'MyFlaskApp')
+    SECRET_KEY = os.getenv('SECRET_KEY', 'default_secret_key')  
+    APP_NAME = os.getenv('APP_NAME', 'MyFlaskApp')              
     FLASK_ENV = os.getenv('FLASK_ENV', 'development')
     FLASK_DEBUG = os.getenv('FLASK_DEBUG', 'True') == 'True'
     FLASK_APP = os.getenv('FLASK_APP', 'app.py')
@@ -12,4 +16,5 @@ class Config:
         SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
         
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 config = Config()
