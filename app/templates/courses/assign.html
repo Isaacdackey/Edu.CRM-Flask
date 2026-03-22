@@ -3,7 +3,7 @@
 {% block title %}Assigner des étudiants{% endblock %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto">
+<div class="max-w-2xl mx-auto dark:bg-gray-900">
     <div class="mb-6">
         <div class="flex items-center gap-4 mb-2">
             <a href="{{ url_for('courses.courses_list') }}"
@@ -33,13 +33,13 @@
             <div class="max-h-80 overflow-y-auto rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/30">
                 {% for student in students %}
                 <label for="student_{{ student.id }}"
-                    class="flex items-center gap-3 p-3 cursor-pointer group hover:bg-white dark:hover:bg-gray-800 transition-all border-b last:border-none border-gray-200 dark:border-gray-700">
+                    class="flex items-center gap-3 p-3 cursor-pointer group hover:bg-white dark:hover:bg-gray-800 transition-all border-b last:border-none border-gray-200 dark:bg-gray-900 dark:border-gray-700">
                     
                     <input type="checkbox" name="student_ids" value="{{ student.id }}"
                         id="student_{{ student.id }}"
-                        class="h-4 w-4 ml-1 text-primary-600 rounded border-gray-300 dark:border-gray-500 focus:ring-primary-500">
+                        class="h-4 w-4 ml-1 text-primary-600 rounded dark:bg-gray-900 border-gray-300 dark:border-gray-500 focus:ring-primary-500">
 
-                    <div class="flex flex-col flex-1">
+                    <div class="flex flex-col flex-1 dark:bg-gray-900">
                         <span class="text-sm font-medium text-gray-800 dark:text-gray-200 group-hover:text-primary-600">
                             {{ student.name }}
                         </span>
@@ -51,9 +51,9 @@
                     <i class="fa-solid fa-user-plus mr-2 text-gray-300 group-hover:text-primary-500 transition"></i>
                 </label>
                 {% else %}
-                <div class="p-6 text-center text-gray-500 dark:text-gray-400">
-                    <i class="fa-solid fa-user-slash text-2xl mb-2"></i><br>
-                    Aucun étudiant disponible
+                <div class="p-6 text-center dark:bg-black">
+                    <i class="fa-solid fa-user-slash text-2xl mb-2 text-gray-400 dark:text-gray-500"></i><br>
+                    <p class="text-gray-500 dark:text-gray-400">Aucun étudiant disponible</p>
                 </div>
                 {% endfor %}
             </div>
