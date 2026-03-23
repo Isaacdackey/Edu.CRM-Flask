@@ -31,20 +31,28 @@ def logout():
     session.clear()
     flash("Déconnecté")
     return redirect('/auth/login')
-
 @auth_bp.route('/profile')
 @login_required
 def profile():
-    user = User.query.get(session['user_id'])
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
     
-    # On récupère le profil spécifique selon le rôle
+    # 1. Sécurité : Si l'utilisateur n'existe pas en BDD, on redirige vers le login
+    if not user:
+        session.clear() # On nettoie une session potentiellement corrompue
+        return redirect(url_for('auth.login'))
+    
     teacher_profile = None
     student_profile = None
     
+    # 2. Gestion des profils selon le rôle
     if user.role == 'teacher':
         teacher_profile = Teacher.query.get(user.id)
     elif user.role == 'student':
         student_profile = Student.query.get(user.id)
+    elif user.role == 'admin':
+        # Tu peux ajouter une logique spécifique ici si l'admin a une table dédiée
+        pass
         
     return render_template(
         'auth/profile.html', 
