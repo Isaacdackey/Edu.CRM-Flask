@@ -1,12 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.services.student_service import *
-from app.auth.decorators import login_required, role_required
+from app.auth.decorators import *
 
 students_bp = Blueprint("students", __name__)
 
 @students_bp.route("/")
 @login_required
-#@roles_required('admin', 'teacher')  # Admin et prof peuvent voir la liste
 def students_list():
     page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '')
@@ -22,7 +21,7 @@ def students_list():
 
 @students_bp.route("/create", methods=["GET","POST"])
 @login_required
-@role_required('admin')  # Seul admin peut créer
+@roles_required('admin', 'teacher')  
 def create_student():
     if request.method == "POST":
         student = {
@@ -37,37 +36,11 @@ def create_student():
     
     return render_template("students/create_student.html")
 
-@students_bp.route("/delete/<int:id>") # Ajout de <int:id> pour la précision
+@students_bp.route("/delete/<int:id>")
 @login_required
+@roles_required('admin')  
 def delete(id):
     delete_student(id)
     flash("Student deleted", "info")
     return redirect(url_for("students.students_list"))
 
-@students_bp.route("/edit/<int:id>", methods=["GET", "POST"])
-@login_required
-@role_required('admin')  # Seul admin peut modifier
-def edit_student(id):
-    student = get_student_by_id(id)
-    if not student:
-        flash("Étudiant non trouvé!", "error")
-        return redirect(url_for("students.students_list"))
-    
-    if request.method == "POST":
-        student_data = {
-            "name": request.form["name"],
-            "email": request.form["email"]
-        }
-        
-        updated_student = update_student(id, student_data)
-        if updated_student:
-            message = f"Étudiant {updated_student['name']} modifié avec succès!"
-            if updated_student.get('password'):
-                message += f" Nouveau mot de passe: {updated_student['password']}"
-            flash(message, "success")
-        else:
-            flash("Erreur lors de la modification!", "error")
-        
-        return redirect(url_for("students.students_list"))
-    
-    return render_template("students/edit.html", student=student)

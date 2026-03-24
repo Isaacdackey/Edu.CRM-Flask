@@ -4,7 +4,7 @@ from app.services.teacher_service import (
     add_teacher,
     delete_teacher
 )
-from app.auth.route import login_required
+from app.auth.decorators import *
 
 teachers_bp = Blueprint(
     "teachers",
@@ -33,6 +33,7 @@ def teachers_list():
 
 @teachers_bp.route("/create", methods=["GET", "POST"])
 @login_required
+@roles_required('admin')  
 def create_teacher():
     if request.method == "POST":
         name = request.form.get("name")
@@ -43,7 +44,6 @@ def create_teacher():
             flash("All fields are required", "danger")
             return render_template("teachers/create.html")
 
-        # Le service s'occupe de la double insertion User/Teacher
         add_teacher(name, email, speciality)
 
         flash("Teacher added successfully", "success")
@@ -53,6 +53,7 @@ def create_teacher():
 
 @teachers_bp.route("/delete/<int:id>")
 @login_required
+@roles_required('admin')  
 def delete_teacher_route(id):
     delete_teacher(id)
     flash("Teacher deleted successfully", "success")

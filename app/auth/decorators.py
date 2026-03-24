@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import session, redirect, flash
+from flask import session, redirect, flash, abort
 
 def login_required(f):
     @wraps(f)
@@ -11,12 +11,13 @@ def login_required(f):
     return decorated
 
 
-def role_required(role):
+def roles_required(*roles):
     def wrapper(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            if session.get('role') != role:
-                return "Accès refusé", 403
+            if session.get('role') not in roles:
+                flash("Accès non autorisé", "danger")
+                return abort(403)
             return f(*args, **kwargs)
         return decorated
     return wrapper
